@@ -1,1 +1,1 @@
-# stabilityDrivenReinforcementLearning
+# StabilityDrivenReinforcementLearning
