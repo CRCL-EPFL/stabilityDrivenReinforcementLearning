@@ -1,0 +1,14 @@
+
+title: Reward Shapping for Autonomous Robotic Construction
+email: marcel.garrobe@epfl.ch
+description: >- # this means to ignore newlines until "baseurl:"
+  Reward Shapping in Reinforcement Learning for autonomous robotic construction. Aiming to produce more stable structures.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: jekyllrb
+github_username:  jekyll
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
