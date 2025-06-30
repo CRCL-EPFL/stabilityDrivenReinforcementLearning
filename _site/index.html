@@ -1,0 +1,257 @@
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #222;
+    margin: 0;
+    padding: 0;
+  }
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background: #fff;
+    width: 100vw;
+  }
+  .sidebar {
+    width: 340px;
+    min-height: 100vh;
+    background: #fff;
+    padding: 40px 32px 80px 32px;
+    box-sizing: border-box;
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 10;
+    position: relative;
+  }
+  .sidebar-content {
+    flex: 1 0 auto;
+  }
+  .sidebar-footer {
+    flex-shrink: 0;
+    font-size: 0.95em;
+    color: #888;
+    margin-top: 40px;
+  }
+  .main-content {
+    padding: 40px 32px 80px 32px;
+    max-width: 1000px;
+    font-size: 1.15em;
+    line-height: 1.5;
+    background: #fff;
+    min-height: 100vh;
+    color: #555;
+    box-sizing: border-box;
+  }
+  .main-content h1,
+  .main-content h2,
+  .main-content h3,
+  .main-content h4,
+  .main-content h5,
+  .main-content h6 {
+    color: #222;
+  }
+  .main-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2em auto;
+  }
+  .page-footer {
+    padding-top: 24px;
+    color: #555;
+    font-size: 1em;
+    text-align: left;
+    max-width: 700px;
+    padding-left: 32px;
+    padding-right: 32px;
+    line-height: 1.5;
+    background: none;
+    border-top: 1px solid #ddd;
+    margin: 0 auto;
+  }
+  .page-footer b {
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #000;
+    display: block;
+    margin-bottom: 18px;
+    font-size: 1.1em;
+  }
+  @media (max-width: 1100px) {
+    .center-container {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .sidebar {
+      width: 100%;
+      min-height: auto;
+      border-right: none;
+      border-bottom: 1px solid #eee;
+      padding: 24px 8px 24px 8px;
+    }
+    .main-content, .page-footer {
+      max-width: 100%;
+      padding: 24px 8px 60px 8px;
+    }
+  }
+</style>
+
+<div class="center-container">
+  <div class="sidebar">
+    <div class="sidebar-content">
+      <h1>Reward Shapping for Autonomous Robotic Construction</h1>
+      <p style="color:#555;">Reward Shapping in Reinforcement Learning for autonomous robotic construction. Aiming to produce more stable structures.</p>
+    </div>
+    <div class="sidebar-footer">
+      This project is developed and maintained by CRCL.
+    </div>
+  </div>
+
+  <div>
+    <div class="main-content">
+      <!-- # Hello, World!
+
+Welcome to my new Jekyll website. This is a custom homepage that I've created to demonstrate how to modify the default page.
+
+## Features
+
+- Simple and clean design
+- Easy to customize
+- Powered by Jekyll
+
+## Recent Updates
+
+I'm currently working on building this site. Check back soon for more content!
+
+![Jekyll Logo](https://jekyllrb.com/img/logo-2x.png)
+
+> "The best way to predict the future is to create it." - Abraham Lincoln
+
+```ruby
+def hello_world
+  puts "Hello, Jekyll!"
+end
+```
+
+[Learn more about Jekyll](https://jekyllrb.com/) -->
+
+<h2 id="motivation-and-project-context">Motivation and Project Context</h2>
+
+<p>This Master’s project explores how reinforcement learning (RL) can enable robots to autonomously build stable structures, without the use of scaffolds or human intervention. It focuses on the design of reward functions that guide the learning process of robots as they place building blocks to form spanning structures connecting two fixed points. The broader vision is to contribute to the field of autonomous construction by leveraging the ability of RL to adapt and improve through interaction with its environment.</p>
+
+<p>The construction problem is framed as a sequential decision-making task, where a robot places one block at a time following a policy it learns through trial and error. The environment simulates the physical constraints of the construction site and evaluates the resulting structure at each step. The robot learns to act through a Soft Actor-Critic (SAC) algorithm, a technique in reinforcement learning that encourages both goal-directed behavior and exploration by maximizing entropy.</p>
+
+<div style="max-width: 60%; margin: 0 auto 20px auto;">
+  <img src="/images/structure.png" alt="Example of stable structure built by the agent" style="width: 100%; display: block;" />
+  <p style="text-align: center; font-style: italic; margin-top: 10px;">Example of stable structure built by the agent</p>
+</div>
+
+<h2 id="structural-stability-and-reward-shaping">Structural Stability and Reward Shaping</h2>
+
+<p>The stability of a structure is a critical aspect of this project. A mechanical model known as Rigid Block Equilibrium (RBE) is used to check whether a given configuration of blocks can stand on its own. This model assumes that the blocks are rigid and interact through compression, offering a fast way to determine if a structure is stable or not. This information is used not only to evaluate the end result but also to influence how the robot learns throughout the construction process.</p>
+
+<p>A key challenge is to design a reward function that effectively teaches the robot what a “good” structure is. Traditional binary rewards—success or failure—are often too simplistic. They provide little feedback during the intermediate steps of construction and can lead the robot to miss important structural patterns. To address this, the project develops new reward strategies based on metrics that measure how stable a structure is, even before it is complete.</p>
+
+<p>Two stability metrics were explored:</p>
+<ul>
+  <li>One based on how much <strong>vertical load</strong> each block can support before the structure collapses</li>
+  <li>Another based on how far a structure can be <strong>tilted</strong> before it becomes unstable</li>
+</ul>
+
+<p>These metrics help quantify not just whether a structure works, but how robust it is. This richer information is then used to fine-tune the reward function given to the learning agent.</p>
+
+<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+  <div style="width: 48%;">
+    <img src="/images/load_bearing_test.png" alt="Comparison of load-bearing capacity across multiple designs" style="width: 100%;" />
+    <p style="text-align: center; font-style: italic; margin-top: 5px;">Load bearing metric example result</p>
+  </div>
+  <div style="width: 48%;">
+    <img src="/images/tilt_test.png" alt="Comparison of structures under tilting tests" style="width: 100%;" />
+    <p style="text-align: center; font-style: italic; margin-top: 5px;">Tilting metric example result</p>
+  </div>
+</div>
+
+<h2 id="evaluation-and-broader-impact">Evaluation and Broader Impact</h2>
+
+<p>A database of over 1,000 different structures was generated using search algorithms, enabling comparison of the metrics across various design scenarios. The findings revealed that:</p>
+
+<ol>
+  <li>The two metrics are highly correlated</li>
+  <li>The load-bearing metric is computationally simpler and more practical to use</li>
+  <li>The load-bearing metric indicates where the weak points in a structure are located</li>
+</ol>
+
+<div style="max-width: 70%; margin: 0 auto 20px auto;">
+  <img src="/images/success_animation_gap_3.gif" alt="Animation showing successful construction by the robot" style="width: 100%; display: block;" />
+  <p style="text-align: center; font-style: italic; margin-top: 10px;">Animation of robot successfully building a spanning structure</p>
+</div>
+
+<p>By using this kind of reward shaping, the robot not only learns to build structures that remain standing, but also structures that are robust to failure. This improves learning efficiency and leads to better performance in the long run. Instead of rewarding only complete, successful structures, the agent now receives continuous feedback throughout the building process, making it easier to explore new designs and avoid structural weaknesses.</p>
+
+<div style="max-width: 80%; margin: 0 auto 20px auto;">
+  <img src="/images/scatterplot.png" alt="Correlation between tilt metric and load bearing capacity" style="width: 100%; display: block;" />
+  <p style="text-align: center; font-style: italic; margin-top: 10px;">Comparison between tilt and load bearing</p>
+</div>
+
+<h2 id="learning-integration-and-experimental-evaluation">Learning Integration and Experimental Evaluation</h2>
+
+<p>After validating that the stability metrics correlate well and provide meaningful information, these metrics were directly integrated into the reinforcement learning pipeline. They were used to shape the reward signals that guided the agent during training. Instead of using a binary notion of success and failure, the agent was rewarded proportionally based on the robustness of each intermediate structure it built.</p>
+
+<p>Experiments were conducted to compare the behavior and performance of agents trained with the shaped rewards against those trained with a simple baseline. This comparison demonstrated that the use of structural stability metrics in the reward design led to more resilient constructions. This approach enabled to develop a more refined understanding of what makes a structure stable, improving the performance throughout the construction process.</p>
+<h3 id="types-of-reward-implemented">Types of Reward Implemented</h3>
+<p>The image below shows the tilt and load bearing achieved by agents trained with different types of reward functions. These reward types are:</p>
+<ul>
+  <li>binary: The agent receives a reward of 1 if the final structure is stable, and -1 if it is not. No reward is given during construction steps.</li>
+  <li>stability: Similar to binary, but if the final structure is stable, the reward is proportional to the stability of the structure (not just 1 or -1).</li>
+  <li>pos: During construction, the agent receives small positive rewards for steps where the load bearing is high.</li>
+  <li>neg: During construction, the agent receives small negative rewards for steps where the load bearing is low.</li>
+  <li>posneg: The agent receives both small positive rewards for high load bearing steps and small negative rewards for low load bearing steps during construction.</li>
+</ul>
+
+<p>The reward types can be combined, for example:</p>
+<ul>
+  <li>binary_pos: Binary reward at the end, plus small positive rewards during construction.</li>
+  <li>stability_neg: Stability-based reward at the end, plus small negative rewards during construction.</li>
+  <li>stability_posneg: Stability-based reward at the end, plus both small positive and negative rewards during construction.</li>
+</ul>
+
+<p>Summary:</p>
+<ul>
+  <li>“binary” and “stability” are for the final structure only.</li>
+  <li>“_pos”, “_neg”, and “_posneg” add extra feedback during the building process.</li>
+  <li>Combining these strategies helps the agent learn to build more stable and robust structures.</li>
+</ul>
+
+<p>This helps to compare how different reward strategies affect the quality of the structures built by the agent. In this next image, we present some of the results of the stability quality using the metrics developed, for each type of reward used.</p>
+
+<div style="max-width: 100%; margin: 0 auto 20px auto;">
+  <img src="/images/comparison_of_success_rates.png" alt="Comparison of success rates between different reward strategies" style="width: 100%; display: block;" />
+  <p style="text-align: center; font-style: italic; margin-top: 10px;">Comparison of load bearing capacity and tilting capacity between different reward strategies</p>
+</div>
+
+<p>Each reward shapping method gave some imporvement on the results when comparing with the baseline binary type.</p>
+
+<div class="final-quote" style="background-color: #f8f9fa; border-left: 4px solid #4a7bab; padding: 20px; margin: 30px 0; border-radius: 4px; font-size: 1.1em; color: #333;">
+  <p style="margin: 0; font-style: italic;">
+    This project is part of a broader effort to understand how machine learning and robotics can merge with architectural and structural design to produce autonomous systems capable of creative and efficient construction.
+  </p>
+</div>
+
+    </div>
+    <div class="page-footer">
+      <b>CREDITS</b>
+      <div style="margin-top: 10px;">
+        by
+        <a href="https://www.linkedin.com/in/marcel-garrob%C3%A9-fonollosa-849314205/" target="_blank">Marcel Garrobé</a>,
+        supervised by
+        <a href="https://people.epfl.ch/gabriel.vallat" target="_blank">Gabriel Vallat</a> and
+        <a href="https://www.crclcrclcrcl.org" target="_blank">Prof. Stefana Parascho</a>.
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>
